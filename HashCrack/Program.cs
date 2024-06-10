@@ -74,7 +74,11 @@ namespace HashCrack
         {
             
             if (args.Length == 0) {
-                Console.WriteLine("usage: [path to passlist] [the path to the hashedPass]");
+            
+                for (int i = 0; i < 17; i++) //10 meaning the amount of lines the string[] logo has
+                {
+                    Console.WriteLine(HelpString[i]);
+                }
             }
 
             string[] cmdLineArgs = Environment.GetCommandLineArgs();
@@ -96,59 +100,11 @@ namespace HashCrack
                 string hashpath = cmdLineArgs[2];
                 string HashToCrack = null;
                 List<string> HashesToCrack = new List<string>();
-                List<string> HashLine = ReadAllLinesFromTxt(hashpath);
-
-
-
-
-
-                if (cmdLineArgs.Contains("-mLC") || cmdLineArgs.Contains("--multiLineCrack")) //multiLineCrack
+                
+                if (cmdLineArgs.Contains("-p") || cmdLineArgs.Contains("--parse"))
                 {
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        Console.WriteLine(StartString[i]);
-                    }
-                    Console.ForegroundColor = ConsoleColor.White;
-                    foreach (string line in HashLine)
-                    {
-                        HashesToCrack.Add(line);
-                        Console.WriteLine($"Hashes2Crack: {line}");
-                    }
-
-                    foreach (string Hashes in HashesToCrack)
-                    {
-                        string tempHash = Hashes;
-                        var lines = File.ReadLines(wordlist);
-                        foreach (string Passline in lines)
-                        {
-                            //Console.WriteLine($"{MD5(Passline)}");
-                            if (MD5(Passline) == tempHash)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine($"Possible Password: {Passline} | HASH: {tempHash}");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                break;
-
-                            }
-                        }
-                        tempHash = string.Empty;
-                        //Thread.Sleep(1000);
-                    }
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        Console.WriteLine(StartString[i]);
-                    }
-                    Console.ForegroundColor = ConsoleColor.White;
-                    foreach (string line in HashLine)
-                    {
-                        HashToCrack = line;
-                        Console.WriteLine($"Hash2Crack: {line}");
-                    }
+                    HashToCrack = hashpath;
+                    Console.WriteLine($"Hash2Crack: {hashpath}");
                     var lines = File.ReadLines(wordlist);
                     foreach (string Passline in lines)
                     {
@@ -163,6 +119,77 @@ namespace HashCrack
                         }
                     }
                 }
+                else
+                {
+                    List<string> HashLine = ReadAllLinesFromTxt(hashpath);
+
+
+
+
+
+                    if (cmdLineArgs.Contains("-mLC") || cmdLineArgs.Contains("--multiLineCrack")) //multiLineCrack
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        for (int i = 0; i < 11; i++)
+                        {
+                            Console.WriteLine(StartString[i]);
+                        }
+                        Console.ForegroundColor = ConsoleColor.White;
+                        foreach (string line in HashLine)
+                        {
+                            HashesToCrack.Add(line);
+                            Console.WriteLine($"Hashes2Crack: {line}");
+                        }
+
+                        foreach (string Hashes in HashesToCrack)
+                        {
+                            string tempHash = Hashes;
+                            var lines = File.ReadLines(wordlist);
+                            foreach (string Passline in lines)
+                            {
+                                //Console.WriteLine($"{MD5(Passline)}");
+                                if (MD5(Passline) == tempHash)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine($"Possible Password: {Passline} | HASH: {tempHash}");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    break;
+
+                                }
+                            }
+                            tempHash = string.Empty;
+                            //Thread.Sleep(1000);
+                        }
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        for (int i = 0; i < 11; i++)
+                        {
+                            Console.WriteLine(StartString[i]);
+                        }
+                        Console.ForegroundColor = ConsoleColor.White;
+                        foreach (string line in HashLine)
+                        {
+                            HashToCrack = line;
+                            Console.WriteLine($"Hash2Crack: {line}");
+                        }
+                        var lines = File.ReadLines(wordlist);
+                        foreach (string Passline in lines)
+                        {
+                            //Console.WriteLine($"{MD5(Passline)}");
+                            if (MD5(Passline) == HashToCrack)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine($"Possible Password: {Passline} | HASH: {HashToCrack}");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                break;
+
+                            }
+                        }
+                    }
+                }
+                
             }
             
             
