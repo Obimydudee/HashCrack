@@ -16,5 +16,5 @@ https://github.com/danielmiessler/SecLists/tree/master/Passwords/Leaked-Database
 |         help           |       -h or --help       |
 |         hashes         |  -mLC or multiLineCrack  |
 |         direct         |       -p or --parse      |
-|          mode          |           -m             |
+|          mode          |           -m  (example: -m SHA256)           |
 
